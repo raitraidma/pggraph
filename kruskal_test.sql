@@ -16,4 +16,4 @@ INSERT INTO pggraph_mst_test.graph (id, source, target, cost) VALUES
 (6, 3, 4, 2),
 (7, 4, 5, 7);
 
-SELECT pggraph.kruskal('SELECT id, source, target, cost FROM pggraph_mst_test.graph');
+SELECT * FROM pggraph.kruskal('SELECT id, source, target, cost FROM pggraph_mst_test.graph');

@@ -63,7 +63,7 @@ BEGIN
   , parent_id BIGINT
   ) ON COMMIT DROP;
 
-  CREATE TEMP TABLE IF NOT EXISTS graph (
+  CREATE TEMP TABLE IF NOT EXISTS kruskal_graph (
     id BIGINT
   , source BIGINT
   , target BIGINT
@@ -78,15 +78,15 @@ BEGIN
   ) ON COMMIT DROP;
 
   DELETE FROM disjoint_set_forest;
-  DELETE FROM graph;
+  DELETE FROM kruskal_graph;
   DELETE FROM mst;
 
-  EXECUTE 'INSERT INTO graph (id, source, target, cost) ' || v_graph_sql;
+  EXECUTE 'INSERT INTO kruskal_graph (id, source, target, cost) ' || v_graph_sql;
 
   PERFORM f_make_set(vertex.id) FROM (
-    SELECT DISTINCT g.source AS id FROM graph g
+    SELECT DISTINCT g.source AS id FROM kruskal_graph g
     UNION 
-    SELECT DISTINCT g.target AS id FROM graph g
+    SELECT DISTINCT g.target AS id FROM kruskal_graph g
   ) vertex;
 
   FOR r_edge IN (SELECT g.id, g.source, g.target, g.cost FROM graph g ORDER BY g.cost ASC)
