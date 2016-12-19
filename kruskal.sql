@@ -89,7 +89,7 @@ BEGIN
     SELECT DISTINCT g.target AS id FROM kruskal_graph g
   ) vertex;
 
-  FOR r_edge IN (SELECT g.id, g.source, g.target, g.cost FROM graph g ORDER BY g.cost ASC)
+  FOR r_edge IN (SELECT g.id, g.source, g.target, g.cost FROM kruskal_graph g ORDER BY g.cost ASC)
   LOOP
     IF (f_find(r_edge.source) <> f_find(r_edge.target)) THEN
       INSERT INTO mst (id, source, target, cost)
